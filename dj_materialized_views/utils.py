@@ -1,9 +1,9 @@
 from django.db import connection
 
 
-def run_custom_sql(*sql):
+def execute_raw_sql(*sql):
     """
-    Run SQL query and close the connection
+    Execute SQL query and close the connection
 
     :param sql: sql string
     :return: None

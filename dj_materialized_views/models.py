@@ -10,7 +10,7 @@ from django_celery_beat.models import PeriodicTask
 
 from dj_materialized_views import tasks
 from dj_materialized_views.utils import (
-    run_custom_sql
+    execute_raw_sql
 )
 
 
@@ -54,7 +54,7 @@ class MaterializedView(models.Model):
 
     def enable_periodic_refresh(self):
         """
-        Used to disable the periodic task that refreshes the materialized view
+        Used to enable the periodic task that refreshes the materialized view
         """
         if not self.periodic_task.enabled:
             self.periodic_task.enabled = True
@@ -62,7 +62,7 @@ class MaterializedView(models.Model):
 
     def disable_periodic_refresh(self):
         """
-        Used to enable the periodic task that refreshes the materialized view
+        Used to disable the periodic task that refreshes the materialized view
         """
         if self.periodic_task.enabled:
             self.periodic_task.enabled = False
@@ -76,7 +76,7 @@ class MaterializedView(models.Model):
             sql_command = f'CREATE MATERIALIZED VIEW IF NOT EXISTS {self.db_table} AS '
             sql_command += self.sql_query
 
-            run_custom_sql(sql_command)
+            execute_raw_sql(sql_command)
 
             self.enable_periodic_refresh()
 
@@ -86,7 +86,7 @@ class MaterializedView(models.Model):
         """
         sql_command = f'REFRESH MATERIALIZED VIEW CONCURRENTLY {self.db_table};'
 
-        return run_custom_sql(sql_command)
+        return execute_raw_sql(sql_command)
 
     def drop(self):
         """
@@ -95,7 +95,7 @@ class MaterializedView(models.Model):
         with transaction.atomic():
             sql_command = f'DROP MATERIALIZED VIEW IF EXISTS {self.db_table};'
 
-            run_custom_sql(sql_command)
+            execute_raw_sql(sql_command)
             self.disable_periodic_refresh()
 
     def link_periodic_refresh_task(self):
@@ -128,8 +128,13 @@ class MaterializedView(models.Model):
 
 
 @receiver(post_save, sender=MaterializedView)
-def link_periodic_refresh_task_receiver(sender, instance, **kwargs):
+def link_periodic_refresh_task_receiver(sender, instance, created, **kwargs):
     instance.link_periodic_refresh_task()
+
+    if created:
+        # do not enable the periodic refresh task when a mv is created
+        # it should only be enabled after the table is created in the database
+        instance.disable_periodic_refresh()
 
 
 class MaterializedViewIndex(models.Model):
@@ -183,7 +188,7 @@ class MaterializedViewIndex(models.Model):
         sql_command = f'CREATE {unique_index} INDEX IF NOT EXISTS {index_name} ' \
                       f'ON {db_table} USING {self.index_type}({self.index_field});'
 
-        return run_custom_sql(sql_command)
+        return execute_raw_sql(sql_command)
 
     def drop(self):
         """
@@ -194,4 +199,4 @@ class MaterializedViewIndex(models.Model):
 
         sql_command = f'DROP INDEX {index_name};'
 
-        return run_custom_sql(sql_command)
+        return execute_raw_sql(sql_command)
