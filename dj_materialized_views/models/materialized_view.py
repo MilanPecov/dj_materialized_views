@@ -83,9 +83,10 @@ class MaterializedView(models.Model):
         """
         Concurrently refreshes the materialized view table
         """
-        sql_command = f'REFRESH MATERIALIZED VIEW CONCURRENTLY {self.db_table};'
+        with transaction.atomic():
+            sql_command = f'REFRESH MATERIALIZED VIEW CONCURRENTLY {self.db_table};'
 
-        return execute_raw_sql(sql_command)
+            execute_raw_sql(sql_command)
 
     def drop(self):
         """
@@ -102,9 +103,10 @@ class MaterializedView(models.Model):
         Links the periodic task that refreshes the materialized view
         with the particular materialized view instance during post_save
         """
-        self.periodic_task.task = tasks.REFRESH_MV_TASK_FULL_NAME  # connect the custom celery task
-        self.periodic_task.kwargs = json.dumps({'materialized_view_id': self.pk})  # call the task with id param
-        self.periodic_task.save()
+        if self.periodic_task.task != tasks.REFRESH_MV_TASK_FULL_NAME:
+            self.periodic_task.task = tasks.REFRESH_MV_TASK_FULL_NAME  # connect the custom celery task
+            self.periodic_task.kwargs = json.dumps({'materialized_view_id': self.pk})  # call the task with id param
+            self.periodic_task.save()
 
     @property
     def model(self):
