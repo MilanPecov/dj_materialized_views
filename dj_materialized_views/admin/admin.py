@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from dj_materialized_views.actions import create_materialized_view_action, refresh_materialized_view_action, \
+from dj_materialized_views.admin.actions import create_materialized_view_action, refresh_materialized_view_action, \
     drop_materialized_view_action, create_index_action, drop_index_action
 from dj_materialized_views.models import MaterializedView, MaterializedViewIndex
 
