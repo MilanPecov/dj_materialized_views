@@ -30,7 +30,7 @@ class MaterializedViewIndex(models.Model):
         related_name='indexes',
         on_delete=models.CASCADE
     )
-    index_type = models.CharField(choices=IndexType.choices(), max_length=255, default=IndexType.BTREE)
+    index_type = models.CharField(choices=IndexType.choices(), max_length=255, default=IndexType.BTREE.value)
     index_field = models.CharField(max_length=255, help_text='DB field to be indexed')
     is_unique = models.BooleanField(default=False)
 

@@ -13,8 +13,6 @@ def create_materialized_view_action(description=_('Create Materialized View')):
             for materialized_view in queryset:
                 try:
                     materialized_view.create()
-                    for index in materialized_view.indexes.all():
-                        index.create()
                 except Exception as e:
                     return model_admin.message_user(request, f'Error: {e}', level=messages.ERROR)
 

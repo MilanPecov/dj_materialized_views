@@ -69,13 +69,16 @@ class MaterializedView(models.Model):
 
     def create(self):
         """
-        Creates a new materialized view table
+        Creates a new materialized view table with indexes
         """
         with transaction.atomic():
             sql_command = f'CREATE MATERIALIZED VIEW IF NOT EXISTS {self.db_table} AS '
             sql_command += self.sql_query
 
             execute_raw_sql(sql_command)
+
+            for index in self.indexes.all():
+                index.create()
 
             self.enable_periodic_refresh()
 
