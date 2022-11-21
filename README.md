@@ -2,14 +2,13 @@
 
 # Overview
 
-Django Materialized Views is a powerful admin tool for managing materialized views through the admin panel 
+Django Materialized Views is a powerful admin app that allows you to manage materialized views from the admin panel
 
-![](admin.png)
+The app can:
 
-The tool can:
 * Create, update and delete materialized views
-* Add indexes on the materialized views
-* Periodically refresh the materialized views for a given interval
+* Create indexes for the materialized views
+* Refresh the materialized views at regular intervals
 
 Limitation:
 * Works only with PostgreSQL
@@ -26,10 +25,11 @@ Install using pip
 pip install dj_materialized_views 
 ```
 
-Add 'dj_materialized_views' to your INSTALLED_APPS setting
+Add 'django_celery_beat' and 'dj_materialized_views' to your INSTALLED_APPS setting
 ```
 INSTALLED_APPS = [
     ...
+    'django_celery_beat',
     'dj_materialized_views',
 ]
 ```

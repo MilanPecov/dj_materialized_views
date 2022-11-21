@@ -1,0 +1,6 @@
+site_name: DJ Materialized Views
+nav:
+    - Home: index.md
+    - Install: install.md
+    - Quick Start: quick_start.md
+theme: readthedocs
