@@ -50,12 +50,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-          python -m pip install django-materialized-views
-      - name: Django Tests
+      - name: Django Tests Preparation
         run: |
           django-admin startproject django_app
           cp .github/conf/settings.py django_app/django_app/
-          python django_app/manage.py test
+          cp -r dj_materialized_views django_app
+      - name: Django Tests Run
+        uses: ./django_app
+        run: |
+          python manage.py test
         env:
           DJANGO: ${{ matrix.django-version }}
 
