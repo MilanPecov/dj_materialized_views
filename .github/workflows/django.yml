@@ -55,8 +55,8 @@ jobs:
           django-admin startproject django_app
           cp .github/conf/settings.py django_app/django_app/
           cp -r dj_materialized_views django_app
+      - uses: ./django_app
       - name: Django Tests Run
-        uses: ./django_app
         run: |
           python manage.py test
         env:
