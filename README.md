@@ -35,3 +35,9 @@ INSTALLED_APPS = [
     'dj_materialized_views',
 ]
 ```
+
+# Documentation
+
+For more information on how to use the app, see the documentation at:
+
+https://dj-materialized-views.readthedocs.io/en/latest/quick_start/
