@@ -1,5 +1,7 @@
 # Django Materialized Views
 
+![workflow](https://github.com/MilanPecov/dj_materialized_views/actions/workflows/django.yml/badge.svg)
+
 # Overview
 
 Django Materialized Views is a powerful admin app that allows you to manage materialized views from the admin panel
