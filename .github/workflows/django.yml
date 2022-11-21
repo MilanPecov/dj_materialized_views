@@ -50,16 +50,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-      - uses: actions/checkout@v2
-      - name: Django Tests Preparation
+      - name: Django Tests
         run: |
           django-admin startproject django_app
           cp .github/conf/settings.py django_app/django_app/
           cp -r dj_materialized_views django_app
-      - uses: ./django_app
-      - name: Django Tests Run
-        run: |
-          python manage.py test
+          python django_app/manage.py test django_app
         env:
           DJANGO: ${{ matrix.django-version }}
 
