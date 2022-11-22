@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=255)),
-                ('index_type', models.CharField(choices=[('BTREE', 'btree'), ('GIN', 'gin'), ('GIST', 'gist'), ('HASH', 'hash')], default=dj_materialized_views.models.MaterializedViewIndex.IndexType['BTREE'], max_length=255)),
+                ('index_type', models.CharField(choices=[('BTREE', 'btree'), ('GIN', 'gin'), ('GIST', 'gist'), ('HASH', 'hash')], default='btree', max_length=255)),
                 ('index_field', models.CharField(help_text='DB field to be indexed', max_length=255)),
                 ('is_unique', models.BooleanField(default=False)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
