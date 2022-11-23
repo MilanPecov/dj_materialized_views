@@ -3,7 +3,7 @@
 ## Overview
 
 Two new admin models have been added to the app
-![img.png](images/mv_admin_page.png)
+![](images/mv_admin_page.png)
 
 The final step is to create a Materialized View entry and then perform the 
 `Create Materialized View` admin action on that entry
