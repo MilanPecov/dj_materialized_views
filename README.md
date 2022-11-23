@@ -36,6 +36,20 @@ INSTALLED_APPS = [
 ]
 ```
 
+## Start Celery
+Start the Celery Worker and the Celery Beat
+
+```
+# carries out the operations that update the materialized view.
+
+celery -A tasks worker -l info
+```
+
+```
+# produces the tasks for refreshing the materialized views
+
+celery -A tasks beat -l info
+```
 # Documentation
 
 For more information on how to use the app, see the documentation at:

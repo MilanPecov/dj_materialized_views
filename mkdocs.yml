@@ -3,4 +3,5 @@ nav:
     - Home: index.md
     - Install: install.md
     - Quick Start: quick_start.md
+    - Updating the Query: update.md
 theme: readthedocs

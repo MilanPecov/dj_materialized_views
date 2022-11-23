@@ -18,3 +18,18 @@ Run migrations
 ```
 python manage.py migrate
 ```
+
+## Start Celery
+Start the Celery Worker and the Celery Beat
+
+```
+# carries out the operations that update the materialized view.
+
+celery -A tasks worker -l info
+```
+
+```
+# produces the tasks for refreshing the materialized views
+
+celery -A tasks beat -l info
+```
