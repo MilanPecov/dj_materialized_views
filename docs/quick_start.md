@@ -5,10 +5,8 @@
 Two new admin models have been added to the app
 ![img.png](images/mv_admin_page.png)
 
-All that is left is to:
-
-* create a Materialized View entry
-* run the admin action that creates the materialized view in the database and starts the refresh loop
+The final step is to create a Materialized View entry and then perform the 
+`Create Materialized View` admin action on that entry
 
 ## Create Materialized View Entry
 ![](images/mv_creation.png)
@@ -25,9 +23,8 @@ All that is left is to:
 * `Indexes` -  concurrent refreshing requires at least one index
 
 
-## Create the Materialized View in the database and start the refresh loop
+## Run the `Create Materialized View` admin action
 
-Select the materialized view entry and execute the admin action `Create Materialized View`
 ![img.png](images/mv_actions.png)
 
 Here's a detailed explanation of what these admin actions do:
